@@ -1,0 +1,120 @@
+// Import Telegraf library
+const { Telegraf } = require('telegraf');
+
+// Load environment variables from .env
+require('dotenv').config();
+
+// Create a new bot instance using your Telegram bot token 
+const bot = new Telegraf(process.env.BOT_TOKEN);
+
+
+
+// /start command -> sends welcome message
+bot.start((ctx)=>{
+    ctx.reply('👋 Welcome to Quote of the Day Bot! Type /quote to get an inspirational quote.');
+});
+
+// /help command → shows instructions
+bot.command(('help') , (ctx)=>{
+    ctx.reply('/quote -> Get a random Qutoe \n /help -> Show this help message');
+});
+
+const quotes = [
+"Dream big, start small, and take consistent action every single day until your goals become reality.",
+"You are stronger than your excuses, and every challenge you face is an opportunity to prove it to yourself.",
+"Great things never come from comfort zones, so step into the unknown and embrace growth with courage.",
+"Every step forward counts, no matter how small it may seem, because progress compounds over time.",
+"Your mindset shapes your reality, so nurture positivity and watch your world transform.",
+"Challenges are opportunities in disguise, pushing you to become the person you were meant to be.",
+"Success favors those who persist even when the path seems impossible and the road is long.",
+"Keep moving forward; every setback is simply a setup for an even greater comeback in your life.",
+"Believe in the power of yet, and know that every skill you desire can be mastered with time.",
+"Mistakes are proof that you are trying, so embrace them, learn from them, and grow stronger.",
+"You are capable of more than you know, so push your limits and surprise even yourself.",
+"Turn your fears into fuel that propels you forward instead of holding you back.",
+"Progress is better than perfection, because taking imperfect action leads to real results.",
+"The best way to predict the future is to create it yourself with vision, focus, and action.",
+"Courage is your superpower, so face your fears boldly and embrace life without hesitation.",
+"Small daily improvements add up to remarkable achievements when practiced consistently.",
+"Don’t wait for opportunity to knock; create it through effort, skill, and determination.",
+"Let your dreams be louder than your doubts, and take steps to make them a reality every day.",
+"A positive attitude has the power to transform challenges into opportunities and setbacks into lessons.",
+"Success is built on consistency, so keep showing up even when it feels difficult or exhausting.",
+"Your only limit is the one you place on yourself, so break free and aim higher than ever before.",
+"Keep your eyes on the prize and stay focused, even when distractions and obstacles appear.",
+"Today is your chance to shine, so seize it with energy, passion, and unwavering determination.",
+"Work hard in silence, but let your achievements speak volumes and inspire others around you.",
+"Start where you are, use what you have, and do what you can to move closer to your goals.",
+"Life rewards action, not intention, so take bold steps today instead of waiting for tomorrow.",
+"Focus on progress rather than perfection, and celebrate the small victories along the way.",
+"Don’t quit, because you are closer to your goals than you realize, and the effort will pay off.",
+"Strive for progress, not approval, and trust yourself to make decisions that align with your vision.",
+"Turn your dreams into actionable plans, and then take deliberate steps to make them real.",
+"Difficult roads often lead to the most beautiful destinations, so embrace the journey with patience.",
+"Fear is temporary, but regret lasts forever, so take courageous actions that honor your potential.",
+"Your attitude determines your altitude, so maintain positivity even when challenges arise.",
+"Push through the pain, because true growth and transformation live on the other side of struggle.",
+"You are your only competition, so focus on being better than your past self every day.",
+"Stay patient and persistent, because great achievements take time and consistent effort.",
+"Let go of what holds you back, and make space for new opportunities and personal growth.",
+"Passion fuels perseverance, so pursue what excites you with dedication and enthusiasm.",
+"Make today count, because tomorrow is never guaranteed, and every moment is precious.",
+"Success is a habit, not a matter of luck, so cultivate routines that lead to consistent wins.",
+"Small victories build confidence, and consistent wins eventually lead to major accomplishments.",
+"Keep your head high and your heart strong, even when the world challenges your resolve.",
+"The best view comes after the hardest climb, so embrace struggle as part of your journey.",
+"Every failure is a stepping stone toward success, offering lessons that shape your growth.",
+"Rise above the noise and doubt, and let your vision guide you to where you truly belong.",
+"You are the author of your own story, so write it with courage, passion, and authenticity.",
+"Don’t let fear dictate your future; take bold actions that reflect your true potential.",
+"Hard work beats talent when talent doesn’t work hard, so commit fully to your craft.",
+"Keep chasing your vision relentlessly, even when the path seems uncertain or unclear.",
+"Every challenge makes you stronger, and each obstacle is an opportunity to grow wiser.",
+"Be brave enough to be yourself, even if it means standing alone against the crowd.",
+"Let determination be your guide, and persistence be the engine that drives your progress.",
+"Opportunities are created by effort, so take initiative and make things happen for yourself.",
+"Make your passion your paycheck, and turn what you love into a sustainable, fulfilling life.",
+"Stay focused, stay humble, and stay hungry for growth, learning, and personal excellence.",
+"Your journey is unique; embrace it fully, learn from it, and celebrate every milestone.",
+"Turn obstacles into opportunities by shifting your perspective and taking decisive action.",
+"Keep believing in yourself, even when others doubt you, because your potential is limitless.",
+"Nothing worth having comes easy, so embrace the hard work and dedication it requires.",
+"Strength grows through struggle, and resilience is built when you refuse to give up.",
+"Be fearless in the pursuit of your dreams, and let courage guide every step you take.",
+"Growth begins at the edge of discomfort, so step outside your comfort zone regularly.",
+"Action conquers fear, so take small steps consistently to build momentum and confidence.",
+"Dream it, do it, achieve it, and inspire others with your commitment and results.",
+"Life begins at the end of your comfort zone, so embrace uncertainty and take bold risks.",
+"Never settle for less than you deserve, and always strive to reach your highest potential.",
+"Stay strong, because storms make trees take deeper roots and challenge shapes character.",
+"Focus on what you can control, and release what is beyond your power to change.",
+"The harder you work, the luckier you become, so keep striving with energy and focus.",
+"Don’t just wish for success; work for it daily with dedication, persistence, and purpose.",
+"Let persistence be your path to success, and let determination fuel every decision you make.",
+"Every great achievement starts with a single decision and a commitment to see it through.",
+"Make failure your teacher, not your enemy, and learn lessons that prepare you for greatness.",
+"Believe in your vision, even when no one else does, and take actions that prove it possible.",
+"Strive for progress, embrace patience, and celebrate every step forward along the way.",
+"Your effort today shapes your tomorrow, so invest energy into actions that matter most.",
+"Success is a series of small wins accumulated over time, so stay consistent and focused.",
+"Keep your spirit unbreakable, your mind clear, and your heart committed to your purpose.",
+"Your dreams deserve action, not excuses, so pursue them relentlessly and courageously.",
+"The journey may be long and difficult, but every step brings you closer to the life you want.",
+];
+
+
+
+
+// /quote command → sends a random quote
+bot.command('quote' , (ctx) => {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    ctx.reply(quotes[randomIndex]);
+});
+
+
+// Start the bot so it listens for commands in Telegram.
+bot.launch();
+console.log('Bot is running...');
+
+
+
