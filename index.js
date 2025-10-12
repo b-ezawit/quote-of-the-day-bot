@@ -4,6 +4,8 @@ const { Telegraf } = require('telegraf');
 // Load environment variables from .env
 require('dotenv').config();
 
+
+
 // Create a new bot instance using your Telegram bot token 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
@@ -17,13 +19,16 @@ bot.command(('help') , (ctx)=>{
     ctx.reply('/quote -> Get a random Qutoe \n /help -> Show this help message');
 });
 
-const quotes = require('./quotes');
+// Import the 'random-quotes' package to get random quotes
+const Quotes = require("randomquote-api");
 
-// /quote command → sends a random quote
-bot.command('quote' , (ctx) => {
-    const randomIndex = Math.floor(Math.random() * quotes.length);
-    ctx.reply(quotes[randomIndex]);
+// Define the /quote command for the bot
+bot.command('quote', (ctx) => {
+    // Get a random quote from the Quotes package
+    const randomquote = Quotes.randomQuote();
+    ctx.reply(`"${randomquote.quote}" — ${randomquote.author}`);
 });
+
 
 
 // Start the bot so it listens for commands in Telegram.
