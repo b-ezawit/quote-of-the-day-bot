@@ -1,0 +1,31 @@
+{
+  "name": "nexus-quote-of-the-day-bot",
+  "version": "1.0.0",
+  "description": "It sends a scheduled quote everyday for its user",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hi-z-k/quote-of-the-day-bot.git"
+  },
+  "author": "Bezawit B.",
+  "contributors": [
+    {
+      "name": "Hizkeal Y.",
+      "email": "hizkealyeshitilab@gmail.com"
+    }
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hi-z-k/quote-of-the-day-bot/issues"
+  },
+  "homepage": "https://github.com/hi-z-k/quote-of-the-day-bot#readme",
+  "dependencies": {
+    "axios": "^1.12.2",
+    "dotenv": "^17.2.3",
+    "telegraf": "^4.16.3"
+  }
+}

@@ -1,37 +1,40 @@
-// Import Telegraf library
-const { Telegraf } = require('telegraf');
+import { Telegraf }from 'telegraf';
+import axios from "axios";
+import 'dotenv/config';
 
-// Load environment variables from .env
-require('dotenv').config();
+const API_LINK = "https://zenquotes.io/api/random"
+
+function Quote(response){
+    return {
+        saying:response.data[0].q,
+        author:response.data[0].a
+    }
+}
 
 
+const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
 
-// Create a new bot instance using your Telegram bot token 
-const bot = new Telegraf(process.env.BOT_TOKEN);
-
-// /start command -> sends welcome message
-bot.start((ctx)=>{
-    ctx.reply('👋 Welcome to Quote of the Day Bot! Type /quote to get an inspirational quote.');
+bot.start((context)=>{
+    const name = context.from.first_name || context.from.username || '';
+    context.reply(`Hey there, ${name}!\nWelcome to Quote of the Day Bot! \nType /quote to get an inspirational quote.`);
 });
 
-// /help command → shows instructions
-bot.command(('help') , (ctx)=>{
-    ctx.reply('/quote -> Get a random Qutoe \n /help -> Show this help message');
+bot.command(('help') , (context)=>{
+    context.reply('/quote -> Get a random Qutoe \n /help -> Show this help message');
 });
 
-// Import the 'random-quotes' package to get random quotes
-const Quotes = require("randomquote-api");
-
-// Define the /quote command for the bot
-bot.command('quote', (ctx) => {
-    // Get a random quote from the Quotes package
-    const randomquote = Quotes.randomQuote();
-    ctx.reply(`"${randomquote.quote}" — ${randomquote.author}`);
+bot.command('quote' , async (context) => {
+    try {
+        const response = await axios.get(API_LINK)
+        const quote = Quote(response)
+        const quoteStr = `"${quote.saying}" — ${quote.author}`
+        context.reply(`Here is the quote of the day\n${quoteStr}`)
+    } catch (error) {
+        console.log("Something went wrong...\nError:",error.message)
+    }
 });
 
 
-
-// Start the bot so it listens for commands in Telegram.
 bot.launch();
 console.log('Bot is running...');
 
